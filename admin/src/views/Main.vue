@@ -11,10 +11,11 @@
       </el-aside>
       <el-container>
         <el-header>
-          Node.js + Vue.js 全栈项目后台管理系统
+          <h3>Node.js + Vue.js 全栈项目后台管理系统</h3>
         </el-header>
         <el-main>
-          <router-view/>
+          <!-- :key="$route.path" 标识唯一键，防止数据不更新 -->
+          <router-view :key="$route.path" />
         </el-main>
       </el-container>
     </el-container>
@@ -34,14 +35,14 @@
           title: '内容管理',
           items: [
             { title: '首页', path: '/' },
-            { title: '课程管理', path: '/courses/coursesList' },
-            { title: '课时管理', path: '/episodes/episodesList' },
+            { title: '课程管理', path: '/courses/courseList' },
+            { title: '课时管理', path: '/episodes/episodeList' },
           ],
         },
         {
           title: '运营管理',
           items: [
-            { title: '用户管理', path: '/users/usersList' },
+            { title: '用户管理', path: '/users/userList' },
           ],
         },
       ],

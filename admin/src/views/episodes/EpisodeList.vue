@@ -1,6 +1,6 @@
 <template>
-  <div id="users-list">
-    用户列表
+  <div id="episode-list">
+    <h3>课时列表</h3>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
   import {State, Getter, Action, Mutation, namespace} from 'vuex-class';
 
   @Component
-  export default class UsersList extends Vue {
+  export default class EpisodeList extends Vue {
     // data
     public msg: string = 'Hello World';
 

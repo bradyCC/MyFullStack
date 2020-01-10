@@ -73,3 +73,15 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
   Nest is [MIT licensed](LICENSE).
+  
+  
+## 目录结构
+```
+- src
+  - app.controller.ts   控制器
+  - app.module.ts       模型
+  - main.ts             入口文件
+```
+
+  
+  
