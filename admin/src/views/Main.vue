@@ -35,7 +35,8 @@
           title: '内容管理',
           items: [
             { title: '首页', path: '/' },
-            { title: '课程管理', path: '/courses/courseList' },
+            { title: '课程管理', path: '/courses/courseCrud' },
+            // { title: '课程管理', path: '/courses/courseList' },
             { title: '课时管理', path: '/episodes/episodeList' },
           ],
         },

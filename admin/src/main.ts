@@ -4,12 +4,12 @@ import router from './router';
 import store from './store';
 import axios, { AxiosInstance } from 'axios';
 import './plugins/element';
+import './plugins/avue';
 
-// 引入 vue-ele-form
-import EleForm from 'vue-ele-form';
-
-// 注册 vue-ele-form
-Vue.use(EleForm);
+// // 引入 vue-ele-form
+// import EleForm from 'vue-ele-form';
+// // 注册 vue-ele-form
+// Vue.use(EleForm);
 
 Vue.config.productionTip = false;
 

@@ -9,7 +9,8 @@
     ]
   },
   "rules": {
-    "indent": [true, "spaces", 2],
+    "indent": [true, "spaces", 2], // 使用制表符或空格强制缩进
+    "max-line-length": [false], // 设置一行的最大长度，默认值[true, 120]
     "interface-name": false,
     "no-consecutive-blank-lines": false,
     "object-literal-sort-keys": false,
