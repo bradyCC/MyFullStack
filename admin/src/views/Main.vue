@@ -35,15 +35,14 @@
           title: '内容管理',
           items: [
             { title: '首页', path: '/' },
-            { title: '课程管理', path: '/courses/courseCrud' },
-            // { title: '课程管理', path: '/courses/courseList' },
-            { title: '课时管理', path: '/episodes/episodeList' },
+            { title: '课程管理', path: '/courses/list' },
+            { title: '课时管理', path: '/episodes/list' },
           ],
         },
         {
           title: '运营管理',
           items: [
-            { title: '用户管理', path: '/users/userList' },
+            { title: '用户管理', path: '/users/list' },
           ],
         },
       ],

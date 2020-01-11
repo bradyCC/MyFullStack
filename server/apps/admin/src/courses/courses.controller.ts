@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Course } from '@libs/db/models/course.module';
 import { Crud } from 'nestjs-mongoose-crud';
@@ -13,4 +13,16 @@ import { ReturnModelType } from "@typegoose/typegoose";
 export class CoursesController {
   // 模型注入
   constructor(@InjectModel(Course) private readonly model: ReturnModelType<typeof Course>) {}
+
+  // 列表配置项
+  @Get('option')
+  option() {
+    return {
+      title: '课程管理',
+      column: [
+        { label: '课程名称', prop: 'name' },
+        { label: '封面图', prop: 'cover' },
+      ],
+    }
+  }
 }

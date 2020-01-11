@@ -1,6 +1,6 @@
 <template>
-  <div id="course-crud">
-    <avue-crud :data="data.data" :option="option" v-model="obj" @row-save="save" @row-update="update" @row-del="remove"></avue-crud>
+  <div id="resource-crud">
+    <avue-crud :data="data.data" :option="option" @row-save="save" @row-update="update" @row-del="remove" v-if="option.column"></avue-crud>
   </div>
 </template>
 
@@ -9,35 +9,37 @@
   import {State, Getter, Action, Mutation, namespace} from 'vuex-class';
 
   @Component
-  export default class CourseCrud extends Vue {
+  export default class ResourceCrud extends Vue {
     // data
     // 课程列表基础数据
     public data: any = {};
     // 配置表格数据列
-    public option: any = {
-      title: '课程管理',
-      column: [
-        { label: '课程名称', prop: 'name' },
-        { label: '封面图', prop: 'cover' },
-      ],
-    };
-    // 课程表单基础数据
-    public obj: any = {};
+    public option: any = {};
+
+    // props
+    //
+    @Prop({type: String, required: true}) private resource!: string;
 
     // created
     public created(): void {
+      this.getCourseListOption();
       this.getCourseList();
     }
 
     // methods
+    // 获取课程列表配置
+    public async getCourseListOption(): Promise<void> {
+      const res = await this.$http.get(`${this.resource}/option`);
+      this.option = res.data;
+    }
     // 获取课程列表
     public async getCourseList(): Promise<void> {
-      const res = await this.$http.get('courses');
+      const res = await this.$http.get(`${this.resource}`);
       this.data = res.data;
     }
     // 新增
     public async save(row: any, done: any, loading: any): Promise<void> {
-      await this.$http.post('courses', row);
+      await this.$http.post(`${this.resource}`, row);
       this.$message.success('创建成功!');
       this.getCourseList();
       done();
@@ -46,7 +48,7 @@
     public async update(row: any, index: any, done: any, loading: any): Promise<void> {
       const data: any = JSON.parse(JSON.stringify(row));
       delete data.$index;
-      await this.$http.put(`courses/${row._id}`, data);
+      await this.$http.put(`${this.resource}/${row._id}`, data);
       this.$message.success('更新成功!');
       this.getCourseList();
       done();
@@ -58,7 +60,7 @@
       } catch (e) {
         return;
       }
-      await this.$http.delete(`courses/${row._id}`);
+      await this.$http.delete(`${this.resource}/${row._id}`);
       this.$message.success('删除成功!');
       this.getCourseList();
     }
@@ -66,5 +68,4 @@
 </script>
 
 <style scoped lang="scss">
-
 </style>
