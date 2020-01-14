@@ -1,6 +1,6 @@
 <template>
   <div id="resource-crud">
-    <avue-crud :data="data.data" :option="option" @row-save="save" @row-update="update" @row-del="remove" v-if="option.column"></avue-crud>
+    <avue-crud :data="data.data" :option="option" :page="page" @row-save="save" @row-update="update" @row-del="remove" @on-load="changePage" @sort-change="changeSort" v-if="option.column"></avue-crud>
   </div>
 </template>
 
@@ -15,15 +15,22 @@
     public data: any = {};
     // 配置表格数据列
     public option: any = {};
+    // 分页配置基础数据
+    public page: any = {
+      total: 0,
+      pageSize: 10,
+      pageSizes: [2, 5, 10],
+    };
+    // 分页查询条件基础数据
+    public query: any = {};
 
     // props
-    //
+    // 模块资源地址
     @Prop({type: String, required: true}) private resource!: string;
 
     // created
     public created(): void {
       this.getCourseListOption();
-      this.getCourseList();
     }
 
     // methods
@@ -34,7 +41,8 @@
     }
     // 获取课程列表
     public async getCourseList(): Promise<void> {
-      const res = await this.$http.get(`${this.resource}`);
+      const res = await this.$http.get(`${this.resource}`, { params: { query: this.query } });
+      this.page.total = res.data.total;
       this.data = res.data;
     }
     // 新增
@@ -62,6 +70,23 @@
       }
       await this.$http.delete(`${this.resource}/${row._id}`);
       this.$message.success('删除成功!');
+      this.getCourseList();
+    }
+    // 分页
+    public async changePage({currentPage, pageSize}: any): Promise<void> {
+      this.query.page = currentPage;
+      this.query.limit = pageSize;
+      this.getCourseList();
+    }
+    // 排序
+    public async changeSort({prop, order}: any): Promise<void> {
+      if (!order) {
+        this.query.sort = null;
+      } else {
+        this.query.sort = {
+          [prop]: order === "ascending" ? 1 : -1,
+        }
+      }
       this.getCourseList();
     }
   }

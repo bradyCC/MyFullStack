@@ -10,10 +10,8 @@
 
   @Component
   export default class Home extends Vue {
-
   }
 </script>
 
 <style scoped lang="scss">
-
 </style>
