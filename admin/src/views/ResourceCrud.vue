@@ -17,9 +17,9 @@
     public option: any = {};
     // 分页配置基础数据
     public page: any = {
-      total: 0,
-      pageSize: 10,
-      pageSizes: [2, 5, 10],
+      total: 0,                 // 总条数
+      pageSize: 10,             // 每页条数
+      pageSizes: [2, 5, 10],    // 每页条数配置
     };
     // 分页查询条件基础数据
     public query: any = {};
@@ -72,21 +72,23 @@
       this.$message.success('删除成功!');
       this.getCourseList();
     }
-    // 分页
+    /**
+     * 分页
+     * @param currentPage 当前页
+     * @param pageSize 每页条数
+     */
     public async changePage({currentPage, pageSize}: any): Promise<void> {
       this.query.page = currentPage;
       this.query.limit = pageSize;
       this.getCourseList();
     }
-    // 排序
+    /**
+     * 排序
+     * @param prop 排序字段
+     * @param order 排序类型 ascending-正序 descending-倒序 null-无排序
+     */
     public async changeSort({prop, order}: any): Promise<void> {
-      if (!order) {
-        this.query.sort = null;
-      } else {
-        this.query.sort = {
-          [prop]: order === "ascending" ? 1 : -1,
-        }
-      }
+      this.query.sort = !order ? null : { [prop]: order === 'ascending' ? 1 : -1 };
       this.getCourseList();
     }
   }
