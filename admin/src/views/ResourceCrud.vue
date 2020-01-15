@@ -1,6 +1,7 @@
 <template>
   <div id="resource-crud">
-    <avue-crud :data="data.data" :option="option" :page="page" @row-save="save" @row-update="update" @row-del="remove" @on-load="changePage" @sort-change="changeSort" v-if="option.column"></avue-crud>
+    <avue-crud :data="data.data" :option="option" :page="page" @row-save="save" @row-update="update" @row-del="remove"
+               @on-load="changePage" @sort-change="changeSort" @search-change="changeSearch" v-if="option.column" ></avue-crud>
   </div>
 </template>
 
@@ -36,12 +37,12 @@
     // methods
     // 获取课程列表配置
     public async getCourseListOption(): Promise<void> {
-      const res = await this.$http.get(`${this.resource}/option`);
+      const res: any = await this.$http.get(`${this.resource}/option`);
       this.option = res.data;
     }
     // 获取课程列表
     public async getCourseList(): Promise<void> {
-      const res = await this.$http.get(`${this.resource}`, { params: { query: this.query } });
+      const res: any = await this.$http.get(`${this.resource}`, { params: { query: this.query } });
       this.page.total = res.data.total;
       this.data = res.data;
     }
@@ -90,6 +91,22 @@
     public async changeSort({prop, order}: any): Promise<void> {
       this.query.sort = !order ? null : { [prop]: order === 'ascending' ? 1 : -1 };
       this.getCourseList();
+    }
+
+    /**
+     * 搜索、模糊匹配
+     * @param where 搜索字段
+     * @param done
+     */
+    public async changeSearch(where: any, done: any): Promise<void> {
+      for (const k in where) {
+        if (where.hasOwnProperty(k) && this.option.column.find((item: any): any => item.prop === k).regex) {
+          where[k] = {$regex: where[k]};
+        }
+      }
+      this.query.where = where;
+      this.getCourseList();
+      done();
     }
   }
 </script>

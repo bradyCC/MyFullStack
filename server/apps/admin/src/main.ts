@@ -3,6 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  // 创建Nest应用程序实例
   const app = await NestFactory.create(AppModule);
 
   // 处理跨域
@@ -18,6 +19,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
 
+  // 监听3000端口
   await app.listen(3000);
   console.log('http://localhost:3000/api-docs');
 }
