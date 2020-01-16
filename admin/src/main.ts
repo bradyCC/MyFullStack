@@ -13,9 +13,13 @@ import './plugins/avue';
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = axios.create({
+const http = axios.create({
   baseURL: 'http://localhost:3000',
 });
+
+Vue.prototype.$http = http;
+// AVue上传请求
+Vue.prototype.$httpajax = http;
 
 // 模块补充、类型声明
 declare module 'vue/types/vue' {

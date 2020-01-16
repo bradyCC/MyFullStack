@@ -1,13 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   // 创建Nest应用程序实例
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // 处理跨域
   app.enableCors();
+
+  // 静态文件托管
+  app.useStaticAssets('uploads', { prefix: '/uploads' });
 
   // swagger配置
   const options = new DocumentBuilder()

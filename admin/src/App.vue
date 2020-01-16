@@ -17,7 +17,7 @@
   body {
     margin: 0;
   }
-  #app {
-
+  .avue-upload__avatar {
+    height: auto !important;
   }
 </style>

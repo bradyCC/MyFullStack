@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, HttpCode, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AppService } from './app.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AppController {
@@ -8,5 +9,15 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  // 文件上传
+  @Post('upload')
+  @HttpCode(200)
+  @UseInterceptors(FileInterceptor('file'))
+  async upload(@UploadedFile('file') file): Promise<any> {
+    return {
+     url: `http://localhost:3000/uploads/${file.filename}`,
+    };
   }
 }
