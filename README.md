@@ -39,6 +39,11 @@ yarn add nestjs-mongoose-crud
 
 # 安装 swagger
 yarn add @nestjs/swagger swagger-ui-express
+
+# 安装 环境变量
+yarn add @nestjs/config
+
+
 ```
 
 
